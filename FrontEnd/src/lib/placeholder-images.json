@@ -1,0 +1,28 @@
+{
+  "placeholderImages": [
+    {
+      "id": "hero-burger",
+      "description": "A delicious and juicy burger, perfect for a hero section.",
+      "imageUrl": "https://images.unsplash.com/photo-1619810816144-68dbc1f695e8?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwzfHxqdWljeSUyMGJ1cmdlcnxlbnwwfHx8fDE3NjMwODQ5MzR8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "juicy burger"
+    },
+    {
+      "id": "classic-burger",
+      "description": "Classic Burger",
+      "imageUrl": "https://images.unsplash.com/photo-1761515397046-44035db91504?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxMHx8Y2xhc3NpYyUyMGJ1cmdlcnxlbnwwfHx8fDE3NjMwNTg2MTF8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "classic burger"
+    },
+    {
+      "id": "bacon-deluxe",
+      "description": "Bacon Deluxe",
+      "imageUrl": "https://images.unsplash.com/photo-1575980726530-4e673bfa0ad8?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw0fHxiYWNvbiUyMGJ1cmdlcnxlbnwwfHx8fDE3NjMxMDMxNDF8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "bacon burger"
+    },
+    {
+      "id": "veggie-burger",
+      "description": "Veggie Burger",
+      "imageUrl": "https://images.unsplash.com/photo-1603064752734-4c48eff53d05?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw4fHx2ZWdnaWUlMjBidXJnZXJ8ZW58MHx8fHwxNzYzMTI5NzkyfDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "veggie burger"
+    }
+  ]
+}
