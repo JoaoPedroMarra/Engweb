@@ -1,4 +1,4 @@
 {
-  "buildCommand": "[ -d frontend ] && cd frontend && npm ci && npm run build || cd FrontEnd && npm ci && npm run build",
-  "outputDirectory": "FrontEnd/.next"
+  "installCommand": "if [ -d FrontEnd ]; then cd FrontEnd && npm ci; else cd frontend && npm ci; fi",
+  "buildCommand": "if [ -d FrontEnd ]; then cd FrontEnd && npm run build; else cd frontend && npm run build; fi"
 }
