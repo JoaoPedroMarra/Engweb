@@ -36,6 +36,15 @@ const nextConfig: NextConfig = {
       },
     ],
   },
+  async rewrites() {
+    const dest = process.env.BACKEND_URL || 'http://localhost:3000'
+    return [
+      {
+        source: '/api/:path*',
+        destination: `${dest}/:path*`,
+      },
+    ]
+  },
 };
 
 export default nextConfig;
