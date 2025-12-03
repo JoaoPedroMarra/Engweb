@@ -1,4 +1,8 @@
 {
+  "builds": [
+    { "src": "FrontEnd/package.json", "use": "@vercel/next" },
+    { "src": "frontend/package.json", "use": "@vercel/next" }
+  ],
   "installCommand": "if [ -d FrontEnd ]; then cd FrontEnd && npm ci; else cd frontend && npm ci; fi",
   "buildCommand": "if [ -d FrontEnd ]; then cd FrontEnd && npm run build; else cd frontend && npm run build; fi"
 }
