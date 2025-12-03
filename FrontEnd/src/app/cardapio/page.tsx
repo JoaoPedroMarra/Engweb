@@ -2,8 +2,13 @@ import { apiGet, API_URL } from "@/lib/api"
 import Image from "next/image"
 
 export default async function CardapioPage(){
-  const res = await apiGet('/cardapio')
-  const products = Array.isArray((res as any)?.products) ? (res as any).products : []
+  let products: any[] = []
+  try {
+    const res = await apiGet('/cardapio')
+    products = Array.isArray((res as any)?.products) ? (res as any).products : []
+  } catch {
+    products = []
+  }
   return (
     <section className="w-full py-12 md:py-16" style={{ backgroundColor: '#f4f1ea' }}>
       <div className="container mx-auto max-w-6xl px-4">
@@ -34,3 +39,5 @@ export default async function CardapioPage(){
     </section>
   )
 }
+export const dynamic = 'force-dynamic'
+export const revalidate = 0
