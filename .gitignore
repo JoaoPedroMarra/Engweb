@@ -1,0 +1,11 @@
+node_modules/
+.next/
+dist/
+build/
+.DS_Store
+Thumbs.db
+.env
+uploads/
+data/
+frontend/.next/
+frontend/node_modules/

@@ -1,7 +1,7 @@
 import { Router } from 'express'
 import authenticate from '../middlewares/auth.middleware'
 import requireRole from '../middlewares/role.middleware'
-import { createProduct } from '../controllers/admin.controller'
+import { createProduct, updateProductById, deleteProductById } from '../controllers/admin.controller'
 import multer from 'multer'
 import fs from 'fs'
 import path from 'path'
@@ -39,6 +39,9 @@ router.post('/products/upload', authenticate, requireRole('admin'), upload.singl
   const product = addProduct(String(name), Number(price), description ? String(description) : undefined, imageUrl)
   return res.status(201).json({ product })
 })
+
+router.put('/products/:id', authenticate, requireRole('admin'), updateProductById)
+router.delete('/products/:id', authenticate, requireRole('admin'), deleteProductById)
 
 router.delete('/products', authenticate, requireRole('admin'), (_req, res) => {
   const count = clearProducts()
