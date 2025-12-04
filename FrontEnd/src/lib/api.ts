@@ -1,9 +1,9 @@
-export const API_URL = process.env.NEXT_PUBLIC_API_URL || 'https://back-gules-seven.vercel.app';
+export const API_URL = process.env.NEXT_PUBLIC_API_URL || '/api';
 
 
 
 type FetchOptions = RequestInit & {
-  token?: string;
+  token?: string | null;
   data?: unknown;
 };
 
