@@ -20,7 +20,7 @@ export function createOrder(req: AuthRequest, res: Response) {
   const parsed = createOrderSchema.safeParse(req.body)
   if (!parsed.success) return res.status(400).json({ error: parsed.error.flatten() })
   try {
-    const order = makeOrder(userId, parsed.data.items)
+    const order = makeOrder(userId, parsed.data.items, parsed.data.deliveryAddress)
     return res.status(201).json({ order })
   } catch (e: any) {
     if (e && e.message === 'invalid_product') return res.status(400).json({ error: 'Invalid product' })

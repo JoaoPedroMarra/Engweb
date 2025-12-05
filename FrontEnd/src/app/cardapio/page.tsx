@@ -1,14 +1,45 @@
+"use client"
+
+import { useEffect, useState } from "react"
 import { apiGet, API_URL } from "@/lib/api"
 import Image from "next/image"
+import { Button } from "@/components/ui/button"
 
-export default async function CardapioPage(){
-  let products: any[] = []
-  try {
-    const res = await apiGet('/cardapio')
-    products = Array.isArray((res as any)?.products) ? (res as any).products : []
-  } catch {
-    products = []
+export default function CardapioPage(){
+  const [products, setProducts] = useState<any[]>([])
+  const [loading, setLoading] = useState(true)
+
+  useEffect(() => {
+    let mounted = true
+    async function load() {
+      try {
+        const res = await apiGet('/cardapio')
+        const list = Array.isArray((res as any)?.products) ? (res as any).products : []
+        if (mounted) setProducts(list)
+      } catch {
+        if (mounted) setProducts([])
+      } finally {
+        if (mounted) setLoading(false)
+      }
+    }
+    load()
+    return () => { mounted = false }
+  }, [])
+
+  function addToCart(p: any) {
+    try {
+      const key = 'cart_items'
+      const current = JSON.parse(localStorage.getItem(key) || '[]')
+      const idx = current.findIndex((it: any) => String(it.productId) === String(p.id))
+      if (idx >= 0) {
+        current[idx].quantity += 1
+      } else {
+        current.push({ productId: p.id, name: p.name, price: Number(p.price || 0), quantity: 1 })
+      }
+      localStorage.setItem(key, JSON.stringify(current))
+    } catch {}
   }
+
   return (
     <section className="w-full py-12 md:py-16" style={{ backgroundColor: '#f4f1ea' }}>
       <div className="container mx-auto max-w-6xl px-4">
@@ -29,10 +60,13 @@ export default async function CardapioPage(){
               <div className="px-5 py-4">
                 <div className="font-headline font-bold text-xl text-foreground">{p.name}</div>
                 <div className="mt-1 font-body text-sm text-neutral-600">R$ {Number(p.price).toFixed(2)}</div>
+                <div className="mt-3">
+                  <Button onClick={() => addToCart(p)} size="sm" variant="secondary">Adicionar ao carrinho</Button>
+                </div>
               </div>
             </div>
           ))}
-          {!products.length && (
+          {!loading && !products.length && (
             <div className="text-center text-muted-foreground font-body">Sem itens no cardápio</div>
           )}
         </div>

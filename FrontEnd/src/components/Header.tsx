@@ -6,7 +6,7 @@ import { useAuth } from '@/hooks/useAuth';
 import { Button } from '@/components/ui/button';
 import { Logo } from '@/components/Logo';
 import { cn } from '@/lib/utils';
-import { LogOut, LayoutDashboard, Utensils, Shield } from 'lucide-react';
+import { LogOut, LayoutDashboard, Utensils, Shield, ShoppingCart } from 'lucide-react';
 
 const NavLink = ({ href, children, className }: { href: string; children: React.ReactNode; className?: string }) => {
   const pathname = usePathname();
@@ -40,6 +40,7 @@ export default function Header() {
           ) : isAuthenticated ? (
             <>
               {userRole === 'customer' && <NavLink href="/dashboard"><LayoutDashboard className="inline-block mr-1 h-4 w-4"/>Painel</NavLink>}
+              {userRole === 'customer' && <NavLink href="/carrinho"><ShoppingCart className="inline-block mr-1 h-4 w-4"/>Carrinho</NavLink>}
               {userRole === 'admin' && <NavLink href="/admin"><Shield className="inline-block mr-1 h-4 w-4"/>Admin</NavLink>}
               <Button variant="ghost" size="sm" onClick={logout}>
                 <LogOut className="mr-2 h-4 w-4" />

@@ -9,5 +9,6 @@ export type Order = {
   customerId: number
   items: OrderItem[]
   total: number
+  deliveryAddress: string
   createdAt: Date
 }

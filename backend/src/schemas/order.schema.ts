@@ -6,5 +6,6 @@ export const orderItemSchema = z.object({
 })
 
 export const createOrderSchema = z.object({
-  items: z.array(orderItemSchema).min(1)
+  items: z.array(orderItemSchema).min(1),
+  deliveryAddress: z.string().min(5)
 })

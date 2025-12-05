@@ -6,7 +6,7 @@ export function getCustomerHistory(customerId: number) {
   return listByCustomer(customerId)
 }
 
-export function makeOrder(customerId: number, items: { productId: number; quantity: number }[]) {
+export function makeOrder(customerId: number, items: { productId: number; quantity: number }[], deliveryAddress: string) {
   const products = listProducts()
   const orderItems: OrderItem[] = []
   let total = 0
@@ -17,5 +17,5 @@ export function makeOrder(customerId: number, items: { productId: number; quanti
     total += unitPrice * it.quantity
     orderItems.push({ productId: it.productId, quantity: it.quantity, unitPrice })
   }
-  return createOrder(customerId, orderItems, total)
+  return createOrder(customerId, orderItems, total, deliveryAddress)
 }
