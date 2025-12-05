@@ -28,7 +28,7 @@ router.post('/products/upload', authenticate, requireRole('admin'), upload.singl
   const file = req.file
   if (!name || !price || !file) return res.status(400).json({ error: 'Invalid payload' })
   try {
-    if (!env.BLOBB_READ_WRITE_TOKEN) {
+    if (!env.BLOBBBB_READ_WRITE_TOKEN) {
       return res.status(500).json({ error: 'Blob token not configured' })
     }
     const ext = path.extname(file.originalname).toLowerCase() || '.jpg'
@@ -36,7 +36,7 @@ router.post('/products/upload', authenticate, requireRole('admin'), upload.singl
     const { url } = await put(key, file.buffer, {
       access: 'public',
       contentType: file.mimetype || 'image/jpeg',
-      token: env.BLOBB_READ_WRITE_TOKEN,
+      token: env.BLOBBBB_READ_WRITE_TOKEN,
     })
     const product = addProduct(String(name), Number(price), description ? String(description) : undefined, url)
     return res.status(201).json({ product })
