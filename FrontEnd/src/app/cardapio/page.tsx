@@ -22,6 +22,7 @@ export default async function CardapioPage(){
                   src={p.imageUrl ? (String(p.imageUrl).startsWith('http') ? p.imageUrl : `${API_URL}${p.imageUrl}`) : 'https://placehold.co/800x500?text=Burger'}
                   alt={p.name}
                   fill
+                  unoptimized
                   className="object-cover"
                 />
               </div>
