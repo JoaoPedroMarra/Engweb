@@ -1,4 +1,4 @@
-export const API_URL = process.env.NEXT_PUBLIC_API_URL || '/api';
+export const API_URL = process.env.NEXT_PUBLIC_API_URL || 'https://backend-psi-gray-53.vercel.app';
 
 
 

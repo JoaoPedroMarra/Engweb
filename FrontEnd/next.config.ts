@@ -40,10 +40,16 @@ const nextConfig: NextConfig = {
         port: '',
         pathname: '/**',
       },
+      {
+        protocol: 'https',
+        hostname: 'backend-psi-gray-53.vercel.app',
+        port: '',
+        pathname: '/**',
+      },
     ],
   },
   async rewrites() {
-    const dest = process.env.BACKEND_URL || 'https://back-beta-sandy-79.vercel.app'
+    const dest = process.env.BACKEND_URL || 'https://backend-psi-gray-53.vercel.app'
     return [
       {
         source: '/api/:path*',
