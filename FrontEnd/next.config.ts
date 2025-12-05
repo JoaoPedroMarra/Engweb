@@ -76,10 +76,16 @@ const nextConfig: NextConfig = {
         port: '',
         pathname: '/**',
       },
+      {
+        protocol: 'https',
+        hostname: 'backendfim.vercel.app',
+        port: '',
+        pathname: '/**',
+      },
     ],
   },
   async rewrites() {
-    const dest = process.env.BACKEND_URL || 'https://engweb-wrgq.vercel.app'
+    const dest = process.env.BACKEND_URL || 'https://backendfim.vercel.app'
     return [
       {
         source: '/api/:path*',
