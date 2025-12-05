@@ -36,14 +36,14 @@ const nextConfig: NextConfig = {
       },
       {
         protocol: 'https',
-        hostname: 'back-gules-seven.vercel.app',
+        hostname: 'back-beta-sandy-79.vercel.app',
         port: '',
         pathname: '/**',
       },
     ],
   },
   async rewrites() {
-    const dest = process.env.BACKEND_URL || 'https://back-gules-seven.vercel.app'
+    const dest = process.env.BACKEND_URL || 'https://back-beta-sandy-79.vercel.app'
     return [
       {
         source: '/api/:path*',
