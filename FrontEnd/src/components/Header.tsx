@@ -6,7 +6,7 @@ import { useAuth } from '@/hooks/useAuth';
 import { Button } from '@/components/ui/button';
 import { Logo } from '@/components/Logo';
 import { cn } from '@/lib/utils';
-import { LogOut, LayoutDashboard, Utensils, Shield, HeartPulse } from 'lucide-react';
+import { LogOut, LayoutDashboard, Utensils, Shield } from 'lucide-react';
 
 const NavLink = ({ href, children, className }: { href: string; children: React.ReactNode; className?: string }) => {
   const pathname = usePathname();
@@ -35,7 +35,6 @@ export default function Header() {
         <Logo />
         <nav className="ml-auto hidden md:flex items-center gap-6 text-sm font-medium font-body">
             <NavLink href="/cardapio"><Utensils className="inline-block mr-1 h-4 w-4"/>Cardápio</NavLink>
-            <NavLink href="/health"><HeartPulse className="inline-block mr-1 h-4 w-4"/>Status</NavLink>
           {isLoading ? (
             <div className="h-8 w-24 animate-pulse rounded-md bg-muted" />
           ) : isAuthenticated ? (
