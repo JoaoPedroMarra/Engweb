@@ -6,6 +6,7 @@ import multer from 'multer'
 import path from 'path'
 import { put } from '@vercel/blob'
 import { addProduct } from '../services/product.service'
+import { env } from '../utils/env'
 import { clearProducts } from '../repositories/product.repository'
 
 const router = Router()
@@ -27,11 +28,15 @@ router.post('/products/upload', authenticate, requireRole('admin'), upload.singl
   const file = req.file
   if (!name || !price || !file) return res.status(400).json({ error: 'Invalid payload' })
   try {
+    if (!env.BLOB_READ_WRITE_TOKEN) {
+      return res.status(500).json({ error: 'Blob token not configured' })
+    }
     const ext = path.extname(file.originalname).toLowerCase() || '.jpg'
     const key = `products/${Date.now()}-${Math.round(Math.random() * 1e9)}${ext}`
     const { url } = await put(key, file.buffer, {
       access: 'public',
       contentType: file.mimetype || 'image/jpeg',
+      token: env.BLOB_READ_WRITE_TOKEN,
     })
     const product = addProduct(String(name), Number(price), description ? String(description) : undefined, url)
     return res.status(201).json({ product })
