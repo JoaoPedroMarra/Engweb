@@ -52,10 +52,16 @@ const nextConfig: NextConfig = {
         port: '',
         pathname: '/**',
       },
+      {
+        protocol: 'https',
+        hostname: 'engweb.vercel.app',
+        port: '',
+        pathname: '/**',
+      },
     ],
   },
   async rewrites() {
-    const dest = process.env.BACKEND_URL || 'https://backend-psi-gray-53.vercel.app'
+    const dest = process.env.BACKEND_URL || 'https://engweb.vercel.app'
     return [
       {
         source: '/api/:path*',
