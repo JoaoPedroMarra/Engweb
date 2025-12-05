@@ -70,10 +70,16 @@ const nextConfig: NextConfig = {
         port: '',
         pathname: '/**',
       },
+      {
+        protocol: 'https',
+        hostname: 'engweb-wrgq.vercel.app',
+        port: '',
+        pathname: '/**',
+      },
     ],
   },
   async rewrites() {
-    const dest = process.env.BACKEND_URL || 'https://backtest-brown.vercel.app'
+    const dest = process.env.BACKEND_URL || 'https://engweb-wrgq.vercel.app'
     return [
       {
         source: '/api/:path*',
