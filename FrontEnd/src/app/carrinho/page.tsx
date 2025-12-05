@@ -13,7 +13,13 @@ type CartItem = { productId: number; name: string; price: number; quantity: numb
 
 function CartInner() {
   const [items, setItems] = useState<CartItem[]>([])
-  const [address, setAddress] = useState('')
+  const [name, setName] = useState('')
+  const [phone, setPhone] = useState('')
+  const [street, setStreet] = useState('')
+  const [number, setNumber] = useState('')
+  const [district, setDistrict] = useState('')
+  const [city, setCity] = useState('')
+  const [notes, setNotes] = useState('')
   const { token } = useAuth()
 
   useEffect(() => {
@@ -45,6 +51,15 @@ function CartInner() {
 
   async function checkout() {
     if (!token) return
+    const addressParts = [
+      `Nome: ${name}`,
+      `Telefone: ${phone}`,
+      `Endereço: ${street}, ${number}`,
+      district ? `Bairro: ${district}` : '',
+      city ? `Cidade: ${city}` : '',
+      notes ? `Obs: ${notes}` : ''
+    ].filter(Boolean)
+    const address = addressParts.join(' | ')
     const payload = {
       items: items.map(it => ({ productId: it.productId, quantity: it.quantity })),
       deliveryAddress: address,
@@ -53,7 +68,13 @@ function CartInner() {
     if (res) {
       localStorage.setItem('cart_items', '[]')
       setItems([])
-      setAddress('')
+      setName('')
+      setPhone('')
+      setStreet('')
+      setNumber('')
+      setDistrict('')
+      setCity('')
+      setNotes('')
       alert('Pedido realizado com sucesso!')
     }
   }
@@ -85,14 +106,46 @@ function CartInner() {
               ))}
             </div>
           )}
-          <div className="mt-6">
-            <label className="block text-sm font-medium mb-1">Endereço de entrega</label>
-            <Textarea value={address} onChange={(e) => setAddress(e.target.value)} placeholder="Rua, número, bairro, cidade" />
+          <div className="mt-6 space-y-3">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <div>
+                <label className="block text-sm font-medium mb-1">Nome</label>
+                <Input value={name} onChange={(e) => setName(e.target.value)} placeholder="Seu nome" />
+              </div>
+              <div>
+                <label className="block text-sm font-medium mb-1">Telefone</label>
+                <Input value={phone} onChange={(e) => setPhone(e.target.value)} placeholder="(xx) xxxxx-xxxx" />
+              </div>
+            </div>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <div>
+                <label className="block text-sm font-medium mb-1">Rua</label>
+                <Input value={street} onChange={(e) => setStreet(e.target.value)} placeholder="Rua" />
+              </div>
+              <div>
+                <label className="block text-sm font-medium mb-1">Número</label>
+                <Input value={number} onChange={(e) => setNumber(e.target.value)} placeholder="Número" />
+              </div>
+            </div>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <div>
+                <label className="block text-sm font-medium mb-1">Bairro</label>
+                <Input value={district} onChange={(e) => setDistrict(e.target.value)} placeholder="Bairro" />
+              </div>
+              <div>
+                <label className="block text-sm font-medium mb-1">Cidade</label>
+                <Input value={city} onChange={(e) => setCity(e.target.value)} placeholder="Cidade" />
+              </div>
+            </div>
+            <div>
+              <label className="block text-sm font-medium mb-1">Observações</label>
+              <Textarea value={notes} onChange={(e) => setNotes(e.target.value)} placeholder="Complemento, referência, portaria, etc." />
+            </div>
           </div>
         </CardContent>
         <CardFooter className="flex justify-between items-center">
           <div className="font-body">Total: <strong>R$ {total.toFixed(2)}</strong></div>
-          <Button disabled={!items.length || !address.trim()} onClick={checkout} style={{ backgroundColor: 'var(--accent)', color: 'var(--accent-foreground)' }}>Finalizar compra</Button>
+          <Button disabled={!items.length || !name.trim() || !phone.trim() || !street.trim() || !number.trim()} onClick={checkout} style={{ backgroundColor: 'var(--accent)', color: 'var(--accent-foreground)' }}>Finalizar compra</Button>
         </CardFooter>
       </Card>
     </div>
