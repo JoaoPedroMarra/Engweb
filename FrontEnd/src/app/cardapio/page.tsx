@@ -19,7 +19,7 @@ export default async function CardapioPage(){
             <div key={p.id} className="rounded-xl border border-neutral-300 shadow-xl hover:shadow-2xl transition-shadow duration-300 bg-white overflow-hidden transform hover:-translate-y-0.5">
               <div className="relative h-56 w-full">
                 <Image
-                  src={p.imageUrl ? `${API_URL}${p.imageUrl}` : 'https://placehold.co/800x500?text=Burger'}
+                  src={p.imageUrl ? (String(p.imageUrl).startsWith('http') ? p.imageUrl : `${API_URL}${p.imageUrl}`) : 'https://placehold.co/800x500?text=Burger'}
                   alt={p.name}
                   fill
                   className="object-cover"

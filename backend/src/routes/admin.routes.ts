@@ -3,8 +3,8 @@ import authenticate from '../middlewares/auth.middleware'
 import requireRole from '../middlewares/role.middleware'
 import { createProduct, updateProductById, deleteProductById } from '../controllers/admin.controller'
 import multer from 'multer'
-import fs from 'fs'
 import path from 'path'
+import { put } from '@vercel/blob'
 import { addProduct } from '../services/product.service'
 import { clearProducts } from '../repositories/product.repository'
 
@@ -12,16 +12,7 @@ const router = Router()
 
 router.post('/products', authenticate, requireRole('admin'), createProduct)
 
-const uploadDir = path.join(process.cwd(), 'uploads')
-try { fs.mkdirSync(uploadDir, { recursive: true }) } catch {}
-const storage = multer.diskStorage({
-  destination: (_req, _file, cb) => cb(null, uploadDir),
-  filename: (_req, file, cb) => {
-    const unique = Date.now() + '-' + Math.round(Math.random() * 1e9)
-    const ext = path.extname(file.originalname)
-    cb(null, unique + ext)
-  }
-})
+const storage = multer.memoryStorage()
 const upload = multer({
   storage,
   fileFilter: (_req, file, cb) => {
@@ -31,13 +22,22 @@ const upload = multer({
   }
 })
 
-router.post('/products/upload', authenticate, requireRole('admin'), upload.single('image'), (req, res) => {
+router.post('/products/upload', authenticate, requireRole('admin'), upload.single('image'), async (req, res) => {
   const { name, price, description } = req.body as any
   const file = req.file
   if (!name || !price || !file) return res.status(400).json({ error: 'Invalid payload' })
-  const imageUrl = `/uploads/${file.filename}`
-  const product = addProduct(String(name), Number(price), description ? String(description) : undefined, imageUrl)
-  return res.status(201).json({ product })
+  try {
+    const ext = path.extname(file.originalname).toLowerCase() || '.jpg'
+    const key = `products/${Date.now()}-${Math.round(Math.random() * 1e9)}${ext}`
+    const { url } = await put(key, file.buffer, {
+      access: 'public',
+      contentType: file.mimetype || 'image/jpeg',
+    })
+    const product = addProduct(String(name), Number(price), description ? String(description) : undefined, url)
+    return res.status(201).json({ product })
+  } catch (e) {
+    return res.status(500).json({ error: 'Upload failed' })
+  }
 })
 
 router.put('/products/:id', authenticate, requireRole('admin'), updateProductById)

@@ -82,25 +82,6 @@ export default function LoginForm({ role }: LoginFormProps) {
         <Button type="submit" className="w-full font-bold" disabled={form.formState.isSubmitting} style={{ backgroundColor: 'var(--accent)', color: 'var(--accent-foreground)' }}>
           {form.formState.isSubmitting ? "Entrando..." : "Entrar"}
         </Button>
-        <div className="grid grid-cols-1 gap-2">
-          <Button
-            type="button"
-            variant="secondary"
-            className="w-full"
-            onClick={async () => {
-              try {
-                const email = role === 'admin' ? 'admin@fastburger.local' : 'cliente@fastburger.local'
-                const password = '123456'
-                await login({ email, password }, role)
-                toast({ title: 'Login realizado', description: 'Bem-vindo!' })
-              } catch (error) {
-                toast({ variant: 'destructive', title: 'Falha no login', description: error instanceof Error ? error.message : 'Ocorreu um erro inesperado.' })
-              }
-            }}
-          >
-            {role === 'admin' ? 'Entrar como Admin Demo' : 'Entrar como Cliente Demo'}
-          </Button>
-        </div>
       </form>
     </Form>
   )

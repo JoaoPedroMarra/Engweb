@@ -45,7 +45,7 @@ export default function AdminPage(){
   async function save(id: number){
     const data = editing[id]
     try {
-      const res = await apiFetch(`/admin/products/${id}`, { method:'PUT', token, data: { name: data.name, price: data.price, description: data.description || '' } })
+      const res = await apiFetch(`/admin/products/${id}`, { method:'PUT', token, data: { name: data.name, price: data.price } })
       const updated = (res as any)?.product
       setProducts(prev => prev.map(p => p.id === id ? updated : p))
       cancelEdit(id)
@@ -87,16 +87,13 @@ export default function AdminPage(){
                 const ed = editing[p.id]
                 return (
                   <div key={p.id} className="grid grid-cols-1 md:grid-cols-12 gap-2 items-center border p-3 rounded">
-                    <div className="md:col-span-3">
+                    <div className="md:col-span-6">
                       <Input value={(ed?.name ?? p.name) as any} onChange={e => setField(p.id, 'name', e.target.value)} disabled={!ed} />
                     </div>
-                    <div className="md:col-span-2">
+                    <div className="md:col-span-3">
                       <Input type="number" step="0.01" value={(ed?.price ?? p.price) as any} onChange={e => setField(p.id, 'price', e.target.value)} disabled={!ed} />
                     </div>
-                    <div className="md:col-span-5">
-                      <Input value={(ed?.description ?? p.description ?? '') as any} onChange={e => setField(p.id, 'description', e.target.value)} disabled={!ed} />
-                    </div>
-                    <div className="md:col-span-2 flex gap-2 justify-end">
+                    <div className="md:col-span-3 flex gap-2 justify-end">
                       {!ed ? (
                         <>
                           <Button variant="secondary" onClick={() => startEdit(p)}>Editar</Button>
