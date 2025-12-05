@@ -64,10 +64,16 @@ const nextConfig: NextConfig = {
         port: '',
         pathname: '/**',
       },
+      {
+        protocol: 'https',
+        hostname: 'backtest-brown.vercel.app',
+        port: '',
+        pathname: '/**',
+      },
     ],
   },
   async rewrites() {
-    const dest = process.env.BACKEND_URL || 'https://backtest-sooty.vercel.app'
+    const dest = process.env.BACKEND_URL || 'https://backtest-brown.vercel.app'
     return [
       {
         source: '/api/:path*',
